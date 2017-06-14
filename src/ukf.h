@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "tools.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -25,12 +26,13 @@ public:
   ///* state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   VectorXd x_;
 
+  VectorXd x_prior;
   ///* state covariance matrix
   MatrixXd P_;
 
   ///* predicted sigma points matrix
   MatrixXd Xsig_pred_;
-
+    MatrixXd  Xsig_pred_prior;
   ///* time when the state is true, in us
   long long time_us_;
 
@@ -67,6 +69,7 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  Tools tools;
 
   /**
    * Constructor
@@ -91,6 +94,7 @@ public:
    */
   void Prediction(double delta_t);
 
+    void Prediction_Prior(double delta_t);
   /**
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1

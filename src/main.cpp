@@ -105,8 +105,9 @@ int main()
           
     	  ukf.ProcessMeasurement(meas_package_R);
 
-	  target_x = ukf.x_[0];
-	  target_y = ukf.x_[1];
+          ukf.Prediction_Prior(0.3);
+	  target_x = ukf.x_prior[0];
+	  target_y = ukf.x_prior[1];
 
     	  double heading_to_target = atan2(target_y - hunter_y, target_x - hunter_x);
     	  while (heading_to_target > M_PI) heading_to_target-=2.*M_PI; 
